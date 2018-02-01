@@ -8,28 +8,39 @@ public class EulerProblem3{
     
     public static boolean isPrime(long x){
         for ( int i = 2; i < x; i++){
-            System.out.println(x + " % " + i + " == " + (x % i));
             if (x % i == 0){
-                System.out.println("Factors: " + i + " and " + x/i);
                 return false;
             }
         }
         return true;
-    }/*
-    public static int biggestFactor(long x){
-        for ( int i = 2; i < x; i++){
-            System.out.println(x + " % " + i + " == " + (x % i));
-            if (x % i == 0){
-                int firstfactor =x/i;
-                return false;
+    }
+    public static List<Long> primeFactors(long f){
+        List<Long> factors = new ArrayList<Long>();
+        long iFactor = 0;
+        long nFactor = 0;
+        for ( Long i = 2L; i < Math.sqrt(f); i++){
+            if (f % i == 0){
+                if (i>iFactor) {
+                    iFactor = i;
+                    nFactor = f/i;
+                    if (isPrime(iFactor)){
+                        factors.add(iFactor);
+                    }
+                    if (isPrime(nFactor)){
+                        factors.add(nFactor);
+                    }
+                }
             }
-    }*/
+        }
+        return factors; 
+    }
     public static void main(String []args){
         long n = 600851475143L;
-        String test = (isPrime(n) ? " is a prime number." : " is not a prime number.");
-        System.out.println(n + test);
-        int result = 2 + 3;
-        System.out.println("The prime factor for 600851475143 is: " + result);
+        isPrime(n);
+        List<Long> factorList = primeFactors(n);
+        System.out.println(factorList);
+        long result = Collections.max(factorList);
+        System.out.println("The largest prime factor for " + n + " is: " + result);
         
     }
     
