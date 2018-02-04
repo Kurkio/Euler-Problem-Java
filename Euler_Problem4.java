@@ -20,17 +20,56 @@ public class EulerProblem4{
         }
         
         return true;
-        
-    
+    }
+    public static boolean isPrime(long x){
+        for ( int i = 2; i < x; i++){
+            if (x % i == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+    public static int largestPalindromesPrime (int min, int max){
+        List<Integer> allPalsP = new ArrayList<Integer>();
+        int nMin = min*min;
+        int nMax = max*max;
+        for( int p = nMin; p <= nMax; p++){
+            if (isPalindrome(p) && !isPrime(p)){
+                allPalsP.add(p);
+            }
+        }
+        int largestPalTrip = 0;
+        for ( int t : allPalsP){
+            List<Integer> palFacts = Factors(t,min,max);
+            if (palFacts.size() > 0 && t > largestPalTrip){
+                largestPalTrip = t;
+                
+            }
+        }
+        return largestPalTrip;
+    }    
+    public static List<Integer> Factors(int f, int min, int max){
+        List<Integer> factors = new ArrayList<Integer>();
+        for ( int c = min; c <= max; c++){
+            if (f % c == 0){
+                if (f/c >= min && f/c <= max){
+                    factors.add(c);
+                    factors.add(f/c);
+                    return factors;
+                }
+            }
+        }
+        return factors;
     }
     public static void main(String []args){
-        int min = 100 * 100;
-        int = max = 999 * 999;
-        int n = 9009;
-        System.out.println(isPalindrome(n) ? n + " is a palindrome." : n + " is not a palindrome.");
-        int result = 2 + 3;
+        int min = 100;
+        int max = 999;
+        int largestPal = largestPalindromesPrime(min, max);
+        List<Integer> palFact = Factors(largestPal, min, max);
+        int result = largestPal;
+        System.out.println(palFact);
         System.out.println("The largest palindrome made from the product of two 3-digit numbers is: " + result);
         
     }
     
-}
+} 
